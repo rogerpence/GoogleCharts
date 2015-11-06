@@ -1,40 +1,56 @@
+<!DOCTYPE html>
+
 <html>
-  <head>
-  </head>
-  <body>
-    <select id="salespeople_select">
-    </select>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <div id="downloadChartImage"></div>
-    <div id="piechart" style="width: 900px; height: 500px;"></div>
-    <br/>
-    <div id="chartImage"></div>
-  </body>
+        <link href="assets/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    </head>
+
+    <body>
+        <select id="salespeople_select">
+        </select>
+
+        <div id="downloadChartImage"></div>
+        <h2 style="margin-left:160px;" id="salesperson_name"></h2>
+        <div id="piechart" style="width: 900px; height: 500px;"></div>
+        <br/>
+        <div id="chartImage"></div>
+    </body>
+
+    <script src="assets/jquery/dist/jquery.min.js"></script>
+    <script src="assets/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="https://www.google.com/jsapi"></script>
+
     <script src="numeral.min.js"></script>
     <script src="underscore.min.js"></script>
-    <script src="jquery-2.1.4.min.js"></script>
-    <script type="text/javascript">
+    <script src="moment.js"></script>
+    <script>
 
-    google.load("visualization", "1", {packages:["corechart"]});
-    google.setOnLoadCallback(drawChart);
+    function showChart(sales_id, name) {
+        google.load("visualization", "1", {packages:["corechart"], callback: drawChart});
 
-    function drawChart(sales_id) {
-        console.log(sales_id);
-        if (_.isUndefined(sales_id)) return;
+        function drawChart() {
+            $("#salesperson_name").html(name);
 
-        var data = getDataTable(sales_id);
-        var options = {
-            title: 'Total opportunities'
-        };
-        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
-        chart.draw(data, options);
-        var imgUri = chart.getImageURI();
+            name = moment(new Date()).format('YYYY-MM-DD_') + name.replace(" ", "_").toLowerCase();
 
-        //$('#chartImage').html("<img src='" + imgUri + " '/>");
-        var downloadUri = imgUri.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
-        $('#downloadChartImage').html("<a href='" + downloadUri + "'' download='daniel.png' >Download</>");
+            var data = getDataTable(sales_id);
+            var options = {
+                title: 'Total opportunities'
+            };
+            var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+            chart.draw(data, options);
+            var imgUri = chart.getImageURI();
+
+            //$('#chartImage').html("<img src='" + imgUri + " '/>");
+            var downloadUri = imgUri.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+            $('#downloadChartImage').html("<a href='" + downloadUri + "'' download='" + name + ".png' >Download</>");
+        }
     }
 
     function getDataTable(id) {
@@ -122,10 +138,12 @@
     $(function() {
         populateSelectTag();
 
-        drawChart($('#salespeople_select').val());;
+        var name = $('#salespeople_select option:selected').text();
+        showChart($('#salespeople_select').val(), name);;
 
         $('#salespeople_select').on('change', function() {
-            drawChart(this.value);
+            var name = $('#salespeople_select option:selected').text();
+            showChart(this.value, name);
         })
     });
 
