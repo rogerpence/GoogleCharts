@@ -1,0 +1,66 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1.1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Period');
+        data.addColumn('number', '1 Year ago');
+        data.addColumn({type: 'string', role: 'style'});
+        data.addColumn('number', '2 Years ago');
+        data.addColumn({type: 'string', role: 'style'});
+        data.addRows([
+            //['Period', '1 year ago', {type: 'string', role: 'style'},'2 years ago', {type: 'string', role: 'style'}],
+            ['Jan',  85653, 'color: #004477',  93929, 'color: #ee6600'],
+            ['Feb', 129956, 'color: #004477', 142513, 'color: #ee6600'],
+            ['Mar', 135863, 'color: #004477', 148991, 'color: #ee6600'],
+            ['Apr', 168352, 'color: #004477', 184619, 'color: #ee6600'],
+            ['May', 177213, 'color: #004477', 194336, 'color: #ee6600'],
+            ['Jun', 146201, 'color: #004477', 160327, 'color: #ee6600'],
+            ['Jul', 122572, 'color: #004477', 134416, 'color: #ee6600'],
+            ['Aug', 190504, 'color: #004477', 208911, 'color: #ee6600'],
+            ['Sep',  98944, 'color: #004477', 108504, 'color: #ee6600'],
+            ['Oct',  60549, 'color: #004477',  66397, 'color: #ee6600'],
+            ['Nov',  68017, 'color: #004477',  65351, 'color: #ee6600'],
+            ['Dec', 108504, 'color: #004477', 104251, 'color: #ee6600']
+        ]);
+
+        // var data = google.visualization.arrayToDataTable([
+        //   ['Period', '1 year ago', {type: 'string', role: 'style'},'2 years ago', {type: 'string', role: 'style'}],
+        //   ['Jan',  85653, 'color: #440066',  93929, 'color: #ee6600'],
+        //   ['Feb', 129956, 'color: #440066', 142513, 'color: #ee6600'],
+        //   ['Mar', 135863, 'color: #440066', 148991, 'color: #ee6600'],
+        //   ['Apr', 168352, 'color: #440066', 184619, 'color: #ee6600'],
+        //   ['May', 177213, 'color: #440066', 194336, 'color: #ee6600'],
+        //   ['Jun', 146201, 'color: #440066', 160327, 'color: #ee6600'],
+        //   ['Jul', 122572, 'color: #440066', 134416, 'color: #ee6600'],
+        //   ['Aug', 190504, 'color: #440066', 208911, 'color: #ee6600'],
+        //   ['Sep',  98944, 'color: #440066', 108504, 'color: #ee6600'],
+        //   ['Oct',  60549, 'color: #440066',  66397, 'color: #ee6600'],
+        //   ['Nov',  68017, 'color: #004477',  65351, 'color: #ee6600'],
+        //   ['Dec', 108504, 'color: #004477', 104251, 'color: #ee6600']
+        // ]);
+
+
+        var options = {
+          chart: {
+            title: 'Company Performance',
+            subtitle: 'Sales, Expenses, and Profit: 2014-2017'
+          }
+        };
+
+        var chart = new google.charts.ColumnChart(document.getElementById('columnchart_material'));
+
+        chart.draw(data, options);
+      }
+ </script>
+
+  </head>
+  <body>
+    <div id="columnchart_material" style="width: 900px; height: 500px;"></div>
+  </body>
+</html>

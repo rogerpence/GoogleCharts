@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+
+    <script type="text/javascript">
+
+google.load("visualization", "1.1", {packages:["corechart"]});
+function drawChart() {
+    var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Period');
+        data.addColumn('number', '1 Year ago');
+        data.addColumn({type: 'string', role: 'style'});
+        data.addColumn('number', '2 Years ago');
+        data.addColumn({type: 'string', role: 'style'});
+        data.addRows([
+            //['Period', '1 year ago', {type: 'string', role: 'style'},'2 years ago', {type: 'string', role: 'style'}],
+            ['Mar',  93189, 'color: #440066',  89461, 'color: #ee6600'],
+            ['Apr', 129956, 'color: #440066', 127753, 'color: #ee6600'],
+            ['May', 135863, 'color: #440066', 128580, 'color: #ee6600'],
+            ['Jun', 168352, 'color: #440066', 180036, 'color: #ee6600'],
+            ['Jul', 185648, 'color: #440066', 187500, 'color: #ee6600'],
+            ['Aug', 146201, 'color: #440066', 132587, 'color: #ee6600'],
+            ['Sep', 129870, 'color: #440066', 107273, 'color: #ee6600'],
+            ['Oct', 190504, 'color: #440066', 198124, 'color: #ee6600'],
+            ['Nov',  98944, 'color: #440066',  97955, 'color: #ee6600'],
+            ['Dec',  70130, 'color: #440066',  75039, 'color: #ee6600'],
+            ['Jan',  63886, 'color: #440066',  64525, 'color: #ee6600'],
+            ['Feb', 103891, 'color: #440066', 106969, 'color: #ee6600']
+    ]);
+
+
+    var chart = new google.visualization.ColumnChart(document.querySelector('#chart_div'));
+    chart.draw(data, {
+        height: 400,
+        width: 800,
+        legend: {
+            position: 'none'
+        }
+        //title: 'Company Performance',
+        //subtitle: 'Sales, Expenses, and Profit: 2014-2017'
+
+    });
+}
+
+google.load('visualization', '1', {packages:['bar'], callback: drawChart});
+ </script>
+
+  </head>
+  <body>
+    <div id="chart_div" style="width: 600px; height: 400px;"></div>
+    <div> this year last year</div>
+  </body>
+</html>

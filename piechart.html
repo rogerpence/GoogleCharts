@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = getDataTable();
+
+        var options = {
+          title: 'Total opportunities'
+        };
+
+        var chart = new google.visualization.PieChart(document.getElementById('piechart'));
+
+        chart.draw(data, options);
+
+        var imgUri = chart.getImageURI();
+
+        $('#chartImage').html("<img src='" + imgUri + " '/>");
+
+        var downloadUri = imgUri.replace(/^data:image\/[^;]/, 'data:application/octet-stream');
+        $('#downloadChartImage').html("<a href='" + downloadUri + "'' download='daniel.png' >Download</>");
+      }
+
+
+      function getDataTable() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Phase');
+        data.addColumn('number', 'Estimated revenue');
+        data.addRows(getRows());
+
+        return data;
+      }
+
+      function getRows() {
+        var data = getSalesPersonData(3);
+
+        return convertToRows(data);
+      }
+
+      function getSalesPersonData(id) {
+        var oppData = [
+          {'id': 1, 'name': 'Callie Brown',      'qualify':  10000, 'develop': 203500, 'propose':  71400, 'emails': 34, 'calls': 22},
+          {'id': 2, 'name': 'Clinton Threlkeld', 'qualify': 119600, 'develop':  39003, 'propose':   3879, 'emails': 34, 'calls': 22},
+          {'id': 3, 'name': 'Daniel Coldicott',  'qualify':  14275, 'develop':      0, 'propose': 293200, 'emails': 34, 'calls': 22}
+        ];
+
+        var row = _.find(oppData,function(row) {
+            return row.id == id;
+        });
+
+        return row;
+      }
+
+      function convertToRows(data) {
+        var rows = [];
+          rows.push(['Qualify',  {v:  data.qualify, f:  numeral(data.qualify).format('0,0')}]);
+          rows.push(['Develop',  {v:  data.develop, f:  numeral(data.develop).format('0,0')}]);
+          rows.push(['Propose',  {v:  data.propose, f:  numeral(data.propose).format('0,0')}]);
+
+       return rows;
+      }
+
+    </script>
+  </head>
+  <body>
+    <div id="downloadChartImage"></div>
+    <div id="piechart" style="width: 900px; height: 500px;"></div>
+    <br/>
+    <div id="chartImage"></div>
+  </body>
+
+  <script src="numeral.min.js"></script>
+  <script src="underscore.min.js"></script>
+  <script src="jquery-2.1.4.min.js"></script>
+</html>
